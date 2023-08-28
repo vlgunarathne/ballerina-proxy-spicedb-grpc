@@ -6,7 +6,7 @@ listener grpc:Listener ep = new (9090);
 @grpc:Descriptor {value: SPICEDB_PROXY_SERVICE_DESC}
 service "ProxyServiceSpiceDB" on ep {
 
-    remote function SayHelloProxy(HelloProxyRequest value) returns HelloProxyReply|error {
+    isolated remote function SayHelloProxy(HelloProxyRequest value) returns HelloProxyReply|error {
         spicedbClient:CheckPermissionRequest checkPermissionRequest = {
             permission: "allowed",
             'resource: {
@@ -21,16 +21,14 @@ service "ProxyServiceSpiceDB" on ep {
             }
         };
 
-        spicedbClient:CheckPermissionResponse|error? checkPermissionResponse = spicedbClient:CheckPermission(checkPermissionRequest);
+        spicedbClient:CheckPermissionResponse|error checkPermissionResponse = spicedbClient:CheckPermission(checkPermissionRequest);
         if checkPermissionResponse is error {
             return error(checkPermissionResponse.message());
-        } else if checkPermissionResponse is spicedbClient:CheckPermissionResponse {
-            return {permissionship: checkPermissionResponse.permissionship};
         }
-        return error("Something terrible happened");
+        return {permissionship: checkPermissionResponse.permissionship};
     }
 
-    remote function SayHelloStreamProxy(HelloProxyRequest value) returns stream<HelloReply, error?>|error {
+    isolated remote function SayHelloStreamProxy(HelloProxyRequest value) returns stream<HelloReply, error?>|error {
         return error("Stream not implemented");
     }
 }
