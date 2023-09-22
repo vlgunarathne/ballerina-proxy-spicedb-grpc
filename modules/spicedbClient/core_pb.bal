@@ -60,7 +60,7 @@ public type Relationship record {|
     ObjectReference 'resource = {};
     string relation = "";
     SubjectReference subject = {};
-    ContextualizedCaveat optional_caveat = {};
+    // ContextualizedCaveat optional_caveat = {};
 |};
 
 @protobuf:Descriptor {value: CORE_DESC}

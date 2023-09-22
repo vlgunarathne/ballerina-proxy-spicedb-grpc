@@ -4,7 +4,9 @@ package viduranga.proxy.spicedb;
 
 service ProxyServiceSpiceDB {
     rpc SayHelloProxy (HelloProxyRequest) returns (HelloProxyReply) {}
+    rpc SayHelloProxyBulk (HelloProxyRequest) returns (HelloProxyReply) {}
     rpc SayHelloStreamProxy (HelloProxyRequest) returns (stream HelloReply) {}
+    rpc WriteHelloProxy (HelloProxyRequest) returns (HelloProxyReply) {}
 }
 
 message HelloProxyRequest {
